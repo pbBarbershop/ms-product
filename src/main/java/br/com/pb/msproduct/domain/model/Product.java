@@ -25,7 +25,7 @@ public class Product {
 
     @NotNull(message = "invalid field")
     @Positive(message = "value must be positive")
-    private BigDecimal valor;
+    private BigDecimal value;
 
     @NotNull(message = "invalid field")
     @PositiveOrZero

@@ -1,7 +1,9 @@
 package br.com.pb.msproduct.framework.adapters.in;
 
 import br.com.pb.msproduct.application.service.ProductService;
+import br.com.pb.msproduct.domain.dto.ProductResponse;
 import br.com.pb.msproduct.domain.model.Product;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,10 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @PostMapping
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductDTO productDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productDTO));
+    }
 
 
 
