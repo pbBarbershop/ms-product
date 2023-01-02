@@ -25,10 +25,10 @@ public class Product {
 
     @NotNull(message = "invalid field")
     @Positive(message = "value must be positive")
-    private BigDecimal valor;
+    private BigDecimal value;
 
     @NotNull(message = "invalid field")
-    @PositiveOrZero
+    @PositiveOrZero(message = "value must be greater than or equal to zero")
     private Long quantity;
 
 }

@@ -12,17 +12,12 @@ import java.math.BigDecimal;
 
 public class ProductDTO {
 
-    @NotBlank(message = "invalid field")
     private String name;
 
     private String description;
 
-    @NotNull(message = "invalid field")
-    @Positive(message = "value must be positive")
-    private BigDecimal valor;
+    private BigDecimal value;
 
-    @NotNull(message = "invalid field")
-    @PositiveOrZero
     private Long quantity;
 
 }
