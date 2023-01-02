@@ -16,6 +16,11 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProductDTO> delete(@PathVariable @NotNull Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 
 
