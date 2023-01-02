@@ -1,22 +1,20 @@
 package br.com.pb.msproduct.framework.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import static org.springframework.http.HttpStatus.*;
+import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class ProductExceptionHandler {
 
-    @ExceptionHandler(value ={ProductNotFoundException.class,})
-    public ResponseEntity<Object> handlerProductNotFoundException(ProductNotFoundException productNotFoundException) {
-        ProductException productException = new ProductException(
-                productNotFoundException.getMessage(),
-                productNotFoundException.getCause(),
-                HttpStatus.NOT_FOUND);
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @ExceptionHandler(IdNotFoundException.class)
+    public ResponseEntity<StandartError> idNotFound(IdNotFoundException ex, HttpServletRequest request) {
+        StandartError error = new StandartError
+                (LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
