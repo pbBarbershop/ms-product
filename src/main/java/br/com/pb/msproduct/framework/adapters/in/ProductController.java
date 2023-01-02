@@ -1,7 +1,9 @@
 package br.com.pb.msproduct.framework.adapters.in;
 
 import br.com.pb.msproduct.application.service.ProductService;
+import br.com.pb.msproduct.domain.dto.ProductResponse;
 import br.com.pb.msproduct.domain.model.Product;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +23,6 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
 
 }
