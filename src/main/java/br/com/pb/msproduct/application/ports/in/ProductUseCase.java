@@ -8,43 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductUseCase implements ProductService {
+public interface ProductUseCase {
 
-    ProductRepository productRepository;
 
-    public ProductUseCase(ProductRepository productRepository){
-        this.productRepository = productRepository;
-    }
-    @Override
-    public String createProduct(Product product) {
-        //Lógica de Negócios
-        productRepository.save(product);
-        return "Success";
-    }
 
-    @Override
-    public String updateProduct(Product product) {
-        //Lógica de Negócios
-        productRepository.save(product);
-        return "Success";
-    }
-
-    @Override
-    public String deleteProduct(String productId) {
-        //Lógica de Negócios
-        productRepository.deleteById(productId);
-        return "Success";
-    }
-
-    @Override
-    public Product getProduct(String productId) {
-        //Lógica de Negócios
-        return productRepository.findById(productId).get();
-    }
-
-    @Override
-    public List<Product> getAllProducts() {
-        //Lógica de Negócios
-        return productRepository.findAll();
-    }
 }

@@ -1,6 +1,7 @@
 package br.com.pb.msproduct.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,15 +13,22 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long ProductId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "DESCRICAO", length = 100, nullable = false)
-    private String ProductDescription;
+    @NotBlank(message = "invalid field")
+    private String name;
 
-    @Column(name = "VALOR", nullable = false)
-    private BigDecimal ProductValor;
+    private String description;
 
+    @NotNull(message = "invalid field")
+    @Positive(message = "value must be positive")
+    private BigDecimal valor;
+
+    @NotNull(message = "invalid field")
+    @PositiveOrZero
+    private Long quantity;
 
 }

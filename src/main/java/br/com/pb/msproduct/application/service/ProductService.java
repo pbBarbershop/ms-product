@@ -1,15 +1,20 @@
 package br.com.pb.msproduct.application.service;
 
-import br.com.pb.msproduct.domain.model.Product;
+import br.com.pb.msproduct.application.ports.in.ProductUseCase;
+import br.com.pb.msproduct.application.ports.out.ProductRepository;
+import br.com.pb.msproduct.framework.exception.ProductNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
+@Service
+@RequiredArgsConstructor
+public class ProductService implements ProductUseCase {
 
-public interface ProductService {
+    private final ProductRepository repository;
+    private final ModelMapper modelMapper;
 
-    public String createProduct(Product product);
-    public String updateProduct(Product product);
-    public String deleteProduct(String productId);
-    public Product getProduct(String productId);
-    public List<Product> getAllProducts();
 
 }
+
+

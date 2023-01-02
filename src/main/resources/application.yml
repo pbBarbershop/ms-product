@@ -1,0 +1,25 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /api/barbershop
+spring:
+  application:
+    name: ms-product
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ms_product?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: true
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    operations-sorter: method
+    path: /swagger-ui.html
+
