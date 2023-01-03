@@ -2,11 +2,10 @@ package br.com.pb.msproduct.domain.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -30,5 +29,4 @@ public class Product {
     @NotNull(message = "invalid field")
     @PositiveOrZero(message = "value must be greater than or equal to zero")
     private Long quantity;
-
 }

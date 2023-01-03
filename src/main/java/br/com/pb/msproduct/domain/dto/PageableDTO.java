@@ -1,8 +1,7 @@
 package br.com.pb.msproduct.domain.dto;
 
-import lombok.*;
-
 import java.util.List;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
