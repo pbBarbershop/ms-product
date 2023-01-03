@@ -3,6 +3,7 @@ package br.com.pb.msproduct.domain.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product {
 
     @Id
@@ -25,7 +27,7 @@ public class Product {
 
     @NotNull(message = "invalid field")
     @Positive(message = "value must be positive")
-    private BigDecimal valor;
+    private BigDecimal value;
 
     @NotNull(message = "invalid field")
     @PositiveOrZero

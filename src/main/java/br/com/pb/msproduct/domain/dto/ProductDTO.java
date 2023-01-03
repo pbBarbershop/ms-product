@@ -1,8 +1,5 @@
 package br.com.pb.msproduct.domain.dto;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -25,7 +22,7 @@ public class ProductDTO {
 
     @NotNull(message = "invalid field")
     @Positive(message = "value must be positive")
-    private BigDecimal valor;
+    private BigDecimal value;
 
     @NotNull(message = "invalid field")
     @PositiveOrZero
