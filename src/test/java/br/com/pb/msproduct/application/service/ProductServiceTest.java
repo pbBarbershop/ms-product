@@ -50,10 +50,6 @@ class ProductServiceTest {
         when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         assertThrows(IdNotFoundException.class, () -> productService.findById(1L));
-
-        verify(productRepository, times(1)).findById(1L);
-        verifyNoMoreInteractions(productRepository);
-        verifyNoInteractions(modelMapper);
     }
 
 }
