@@ -17,10 +17,7 @@ public class ProductService implements ProductUseCase {
     private final ModelMapper modelMapper;
 
     public ProductDTO findById(Long id) {
-        Product product = repository.findById(id)
-                .orElseThrow(IdNotFoundException::new);
+        Product product = repository.findById(id).orElseThrow(IdNotFoundException::new);
         return modelMapper.map(product, ProductDTO.class);
     }
 }
-
-

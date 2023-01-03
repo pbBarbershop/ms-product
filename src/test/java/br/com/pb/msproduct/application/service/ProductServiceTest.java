@@ -1,9 +1,15 @@
 package br.com.pb.msproduct.application.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+
 import br.com.pb.msproduct.application.ports.out.ProductRepository;
 import br.com.pb.msproduct.domain.dto.ProductDTO;
 import br.com.pb.msproduct.domain.model.Product;
 import br.com.pb.msproduct.framework.exception.IdNotFoundException;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,13 +19,6 @@ import org.mockito.Spy;
 import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -51,5 +50,4 @@ class ProductServiceTest {
 
         assertThrows(IdNotFoundException.class, () -> productService.findById(1L));
     }
-
 }
