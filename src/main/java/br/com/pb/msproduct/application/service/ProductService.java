@@ -9,6 +9,11 @@ import br.com.pb.msproduct.framework.exception.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import br.com.pb.msproduct.domain.dto.PageableDTO;
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import br.com.pb.msproduct.framework.exception.ObjectNotFoundException;
 
 import java.util.Optional;
 
@@ -51,6 +56,29 @@ public class ProductService implements ProductUseCase {
         return modelMapper.map(product, ProductResponse.class);
     }
 
+
+
+    @Override
+    public PageableDTO findAll(String name, Pageable pageable) {
+        Page page;
+        if (name == null || name.trim().length() == 0) {
+            page = repository.findAll(pageable);
+        } else {
+            page = repository.findByName((name.trim()), pageable);
+            if (page.isEmpty()) {
+                throw new ObjectNotFoundException("Product not found with name: " + name);
+            }
+        }
+        List<ProductDTO> products = page.getContent();
+        return PageableDTO
+            .builder()
+            .numberOfElements(page.getNumberOfElements())
+            .totalElements(page.getTotalElements())
+            .totalPages(page.getTotalPages())
+            .paymentsList(products)
+            .build();
+    }
+
     private void checkIfNameExists(String name) {
         var check = repository.findByNameIgnoreCase(name);
         if (check.isPresent()){
@@ -61,7 +89,5 @@ public class ProductService implements ProductUseCase {
     private void checkIfIdExists(Long id) {
         repository.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
-
 }
-
 

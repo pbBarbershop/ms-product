@@ -46,13 +46,9 @@ public class ProductExceptionHandler {
     }
 
     @ExceptionHandler(IdNotFoundException.class)
-    public ResponseEntity<StandartError> idNotFound(IdNotFoundException ex, HttpServletRequest request) {
-        StandartError error = new StandartError(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                request.getRequestURI()
-        );
+    public ResponseEntity<StandardError> idNotFound(IdNotFoundException ex, HttpServletRequest request) {
+        StandardError error = new StandardError
+                (LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
