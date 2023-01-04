@@ -18,9 +18,15 @@ public class ProductController {
 
     private final ProductService productService;
 
+
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDTO productDTO){
         return ResponseEntity.status(HttpStatus.OK).body(productService.updateProduct(id, productDTO));
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductDTO productDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productDTO));
     }
 
 

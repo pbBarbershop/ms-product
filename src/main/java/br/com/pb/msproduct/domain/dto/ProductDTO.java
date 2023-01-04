@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class ProductDTO {
 
+    private Long id;
+
     @NotBlank(message = "invalid field")
     private String name;
 
