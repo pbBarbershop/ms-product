@@ -1,28 +1,31 @@
 package br.com.pb.msproduct.application.service;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import br.com.pb.msproduct.application.ports.out.ProductRepository;
 import br.com.pb.msproduct.domain.dto.PageableDTO;
 import br.com.pb.msproduct.domain.dto.ProductDTO;
 import br.com.pb.msproduct.domain.model.Product;
+import br.com.pb.msproduct.framework.exception.IdNotFoundException;
 import br.com.pb.msproduct.framework.exception.ObjectNotFoundException;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
@@ -106,5 +109,23 @@ class ProductServiceTest {
         when(productRepository.findByName(name.trim(), pageable)).thenReturn(emptyPage);
 
         assertThrows(ObjectNotFoundException.class, () -> productService.findAll(name, pageable));
+    }
+        @Test
+        void shouldFindProductById() {
+        Product product = new Product();
+        ProductDTO productDTO = new ProductDTO();
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+        when(modelMapper.map(product, ProductDTO.class)).thenReturn(productDTO);
+
+        ProductDTO result = productService.findById(1L);
+
+        assertEquals(productDTO, result);
+    }
+
+    @Test
+    void shouldReturnHandledExceptionIdNotFound() {
+        when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(IdNotFoundException.class, () -> productService.findById(1L));
     }
 }

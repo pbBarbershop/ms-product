@@ -1,4 +1,3 @@
-
 package br.com.pb.msproduct.framework.exception;
 public class IdNotFoundException extends RuntimeException {
 
@@ -8,5 +7,4 @@ public class IdNotFoundException extends RuntimeException {
 
     }
 }
-
 

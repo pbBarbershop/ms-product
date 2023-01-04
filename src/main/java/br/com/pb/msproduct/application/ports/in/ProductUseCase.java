@@ -1,9 +1,10 @@
 package br.com.pb.msproduct.application.ports.in;
+
+import br.com.pb.msproduct.domain.dto.PageableDTO;
 import br.com.pb.msproduct.domain.dto.ProductDTO;
 import br.com.pb.msproduct.domain.dto.ProductResponse;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
-import br.com.pb.msproduct.domain.dto.PageableDTO;
+import org.springframework.stereotype.Service;
 
 @Service
 public interface ProductUseCase {
@@ -15,4 +16,7 @@ public interface ProductUseCase {
     ProductResponse createProduct(ProductDTO dto);
 
     public PageableDTO findAll(String productName, Pageable pageable);
+
+    public ProductDTO findById(Long id);
 }
+

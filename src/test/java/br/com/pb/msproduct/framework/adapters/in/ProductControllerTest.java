@@ -1,7 +1,4 @@
 package br.com.pb.msproduct.framework.adapters.in;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import br.com.pb.msproduct.application.service.ProductService;
 import br.com.pb.msproduct.domain.dto.PageableDTO;
@@ -24,6 +21,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @WebMvcTest(controllers = ProductController.class)
 @AutoConfigureMockMvc
@@ -81,6 +82,23 @@ class ProductControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request))
+                .andReturn();
+
+        MockHttpServletResponse response = result.getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    @Test
+    void findById() throws Exception {
+        var paymentDTO = new ProductDTO();
+        when(productService.findById(any())).thenReturn(paymentDTO);
+        MvcResult result = mockMvc
+                .perform(
+                        MockMvcRequestBuilders
+                                .get(ID_URL)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
                 .andReturn();
 
         MockHttpServletResponse response = result.getResponse();

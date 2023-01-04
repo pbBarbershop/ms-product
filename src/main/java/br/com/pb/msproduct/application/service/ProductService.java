@@ -1,21 +1,21 @@
 package br.com.pb.msproduct.application.service;
+
 import br.com.pb.msproduct.application.ports.in.ProductUseCase;
 import br.com.pb.msproduct.application.ports.out.ProductRepository;
+import br.com.pb.msproduct.domain.dto.PageableDTO;
 import br.com.pb.msproduct.domain.dto.ProductDTO;
 import br.com.pb.msproduct.domain.dto.ProductResponse;
 import br.com.pb.msproduct.domain.model.Product;
 import br.com.pb.msproduct.framework.exception.DataIntegrityValidationException;
 import br.com.pb.msproduct.framework.exception.IdNotFoundException;
+import br.com.pb.msproduct.framework.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-import br.com.pb.msproduct.domain.dto.PageableDTO;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import br.com.pb.msproduct.framework.exception.ObjectNotFoundException;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -85,9 +85,15 @@ public class ProductService implements ProductUseCase {
             throw new DataIntegrityValidationException("Product Name already exists");
         }
     }
+    public ProductDTO findById(Long id) {
+        checkIfIdExists(id);
+        Product product = repository.findById(id).get();
+        return modelMapper.map(product, ProductDTO.class);
+    }
 
     private void checkIfIdExists(Long id) {
         repository.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
+
 }
 

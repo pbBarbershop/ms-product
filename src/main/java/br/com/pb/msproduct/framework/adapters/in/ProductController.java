@@ -2,6 +2,7 @@ package br.com.pb.msproduct.framework.adapters.in;
 
 import br.com.pb.msproduct.application.service.ProductService;
 import br.com.pb.msproduct.domain.dto.PageableDTO;
+import br.com.pb.msproduct.domain.dto.ProductDTO;
 import br.com.pb.msproduct.domain.dto.ProductResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import br.com.pb.msproduct.domain.dto.ProductDTO;
 
 @RequiredArgsConstructor
 @RestController
@@ -40,5 +40,8 @@ public class ProductController {
     public PageableDTO findAll(@RequestParam(required = false) String name, Pageable pageable) {
         return this.productService.findAll(name, pageable);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.findById(id));
+    }
 }
-
