@@ -34,7 +34,8 @@ public class ProductService implements ProductUseCase {
     @Override
     public ProductResponse updateProduct(Long id, ProductDTO productDTO) {
         checkIfIdExists(id);
-        checkIfNameExists(productDTO.getName());
+        productDTO.setId(id);
+        checkIfNameExists(productDTO);
 
         var product = repository.getReferenceById(id);
 
@@ -49,7 +50,7 @@ public class ProductService implements ProductUseCase {
     @Override
     public ProductResponse createProduct(ProductDTO dto) {
 
-        checkIfNameExists(dto.getName());
+        checkIfNameExists(dto);
 
         Product product = modelMapper.map(dto, Product.class);
         repository.save(product);
@@ -79,9 +80,10 @@ public class ProductService implements ProductUseCase {
             .build();
     }
 
-    private void checkIfNameExists(String name) {
-        var check = repository.findByNameIgnoreCase(name);
-        if (check.isPresent()){
+    private void checkIfNameExists(ProductDTO productDTO) {
+
+        var check = repository.findByNameIgnoreCase(productDTO.getName());
+        if (check.isPresent() && productDTO.getId() != check.get().getId()){
             throw new DataIntegrityValidationException("Product Name already exists");
         }
     }
