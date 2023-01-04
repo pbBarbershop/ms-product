@@ -35,7 +35,12 @@ public class ProductService implements ProductUseCase {
     public ProductResponse updateProduct(Long id, ProductDTO productDTO) {
         checkIfIdExists(id);
         productDTO.setId(id);
+
+        var name = productDTO.getName().trim();
+        productDTO.setName(name);
+        
         checkIfNameExists(productDTO);
+
 
         var product = repository.getReferenceById(id);
 
@@ -49,6 +54,8 @@ public class ProductService implements ProductUseCase {
     }
     @Override
     public ProductResponse createProduct(ProductDTO dto) {
+        var name = dto.getName().trim();
+        dto.setName(name);
 
         checkIfNameExists(dto);
 
