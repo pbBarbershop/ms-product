@@ -2,7 +2,6 @@ package br.com.pb.msproduct.framework.adapters.in;
 
 import br.com.pb.msproduct.application.service.ProductService;
 import br.com.pb.msproduct.domain.dto.ProductResponse;
-import br.com.pb.msproduct.domain.model.Product;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,10 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.createProduct(productDTO));
     }
 
-
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ProductDTO> delete(@PathVariable @NotNull Long id) {
+        productService.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 
 }

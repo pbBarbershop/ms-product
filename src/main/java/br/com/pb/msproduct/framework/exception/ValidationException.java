@@ -1,6 +1,5 @@
 package br.com.pb.msproduct.framework.exception;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

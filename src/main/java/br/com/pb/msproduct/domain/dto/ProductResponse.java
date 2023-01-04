@@ -1,4 +1,5 @@
 package br.com.pb.msproduct.domain.dto;
+
 import lombok.Getter;
 import lombok.Setter;
 

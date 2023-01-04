@@ -3,12 +3,9 @@ import br.com.pb.msproduct.application.ports.in.ProductUseCase;
 import br.com.pb.msproduct.application.ports.out.ProductRepository;
 import br.com.pb.msproduct.domain.dto.ProductDTO;
 import br.com.pb.msproduct.domain.dto.ProductResponse;
-
 import br.com.pb.msproduct.domain.model.Product;
 import br.com.pb.msproduct.framework.exception.DataIntegrityValidationException;
 import br.com.pb.msproduct.framework.exception.IdNotFoundException;
-import br.com.pb.msproduct.framework.exception.ProductNotFoundException;
-
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -23,11 +20,15 @@ public class ProductService implements ProductUseCase {
 
     private final ModelMapper modelMapper;
 
-
+    @Override
+    public void deleteProduct(Long id) {
+        checkIfIdExists(id);
+        repository.deleteById(id);
+    }
 
     @Override
     public ProductResponse updateProduct(Long id, ProductDTO productDTO) {
-        checkIdExists(id);
+        checkIfIdExists(id);
         checkIfNameExists(productDTO.getName());
 
         var product = repository.getReferenceById(id);
@@ -40,7 +41,7 @@ public class ProductService implements ProductUseCase {
         repository.save(product);
         return modelMapper.map(product, ProductResponse.class);
     }
-
+    @Override
     public ProductResponse createProduct(ProductDTO dto) {
 
         checkIfNameExists(dto.getName());
@@ -57,12 +58,8 @@ public class ProductService implements ProductUseCase {
         }
     }
 
-    private void checkIdExists(Long id){
-        var productOptional = repository.findById(id);
-
-        if (!productOptional.isPresent()){
-            throw new IdNotFoundException(id);
-        }
+    private void checkIfIdExists(Long id) {
+        repository.findById(id).orElseThrow(() -> new IdNotFoundException(id));
     }
 
 }
