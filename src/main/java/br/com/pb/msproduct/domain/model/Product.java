@@ -1,16 +1,25 @@
 package br.com.pb.msproduct.domain.model;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import java.math.BigDecimal;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Product {
 
     @Id
@@ -27,6 +36,7 @@ public class Product {
     private BigDecimal value;
 
     @NotNull(message = "invalid field")
-    @PositiveOrZero(message = "value must be greater than or equal to zero")
+    @PositiveOrZero
     private Long quantity;
+
 }
