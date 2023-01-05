@@ -18,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public PageableDTO findAll(@RequestParam(required = false) String name, Pageable pageable) {
-        return this.productService.findAll(name, pageable);
+    public ResponseEntity<PageableDTO> findAll(@RequestParam(required = false) String name, Pageable pageable) {
+        return ResponseEntity.status(HttpStatus.OK).body(this.productService.findAll(name, pageable));
     }
 }
