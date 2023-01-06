@@ -38,21 +38,6 @@ class ProductExceptionHandlerTest {
         assertEquals("test exception", errorResponse.getMessage());
     }
 
-    //    @Test
-    //    public void handleMethodArgumentNotValid() {
-    //
-    //        MethodArgumentNotValidException ex = mock(MethodArgumentNotValidException.class);
-    //        when(ex.getBindingResult().getFieldError().getDefaultMessage()).thenReturn("campo inválido");
-    //        WebRequest request = mock(WebRequest.class);
-    //
-    //        PaymentExceptionHandler handler = new PaymentExceptionHandler();
-    //        ResponseEntity<Object> response = handler.handleMethodArgumentNotValid(ex, null, HttpStatus.BAD_REQUEST, request);
-    //
-    //        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    //        assertTrue(response.getBody() instanceof ErrorResponse);
-    //        ErrorResponse errorResponse = (ErrorResponse) response.getBody();
-    //        assertEquals("campo inválido", errorResponse.getMessage());
-    //    }
 
     @Test
     public void handle() {
@@ -103,3 +88,4 @@ class ProductExceptionHandlerTest {
         assertEquals("mensagem teste", errorResponse.getMessage());
     }
 }
+

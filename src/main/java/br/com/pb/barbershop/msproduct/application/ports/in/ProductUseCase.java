@@ -18,3 +18,5 @@ public interface ProductUseCase {
 
     void delete(Long id);
 }
+
+

@@ -1,3 +1,4 @@
+
 package br.com.pb.barbershop.msproduct.application.ports.out;
 
 import br.com.pb.barbershop.msproduct.domain.model.Product;
@@ -11,3 +12,4 @@ public interface ProductRepositoryPortOut {
 
     Page findByName(String name, Pageable pageable);
 }
+
