@@ -1,16 +1,16 @@
 package br.com.pb.barbershop.msproduct.framework.exception;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.context.request.WebRequest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class ProductExceptionHandlerTest {
@@ -19,32 +19,87 @@ class ProductExceptionHandlerTest {
     private ProductExceptionHandler exceptionHandler;
 
     @Test
-    void productNotFound_Should_ReturnException() {
-        ObjectNotFoundException productNotFoundException = new ObjectNotFoundException(
-            "Product not found with name: shampoo"
+    void handleExceptionInternal() {
+        Exception ex = new Exception("test exception");
+        WebRequest request = mock(WebRequest.class);
+
+        ProductExceptionHandler handler = new ProductExceptionHandler();
+        ResponseEntity<Object> response = handler.handleExceptionInternal(
+                ex,
+                null,
+                null,
+                HttpStatus.BAD_REQUEST,
+                request
         );
 
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        when(request.getRequestURI()).thenReturn("/test");
-        ResponseEntity<StandardError> response = exceptionHandler.objectNotFound(productNotFoundException, request);
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody() instanceof ErrorResponse);
+        ErrorResponse errorResponse = (ErrorResponse) response.getBody();
+        assertEquals("test exception", errorResponse.getMessage());
+    }
 
-        StandardError error = response.getBody();
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertEquals(HttpStatus.NOT_FOUND.value(), error.getStatus());
-        assertEquals("Product not found with name: shampoo", error.getError());
-        assertEquals("/test", error.getPath());
+    //    @Test
+    //    public void handleMethodArgumentNotValid() {
+    //
+    //        MethodArgumentNotValidException ex = mock(MethodArgumentNotValidException.class);
+    //        when(ex.getBindingResult().getFieldError().getDefaultMessage()).thenReturn("campo inválido");
+    //        WebRequest request = mock(WebRequest.class);
+    //
+    //        PaymentExceptionHandler handler = new PaymentExceptionHandler();
+    //        ResponseEntity<Object> response = handler.handleMethodArgumentNotValid(ex, null, HttpStatus.BAD_REQUEST, request);
+    //
+    //        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    //        assertTrue(response.getBody() instanceof ErrorResponse);
+    //        ErrorResponse errorResponse = (ErrorResponse) response.getBody();
+    //        assertEquals("campo inválido", errorResponse.getMessage());
+    //    }
+
+    @Test
+    public void handle() {
+        Exception ex1 = mock(Exception.class);
+        GenericException ex2 = mock(GenericException.class);
+        when(ex2.getMessageDTO()).thenReturn("mensagem teste");
+        when(ex2.getStatus()).thenReturn(HttpStatus.BAD_REQUEST);
+
+        ProductExceptionHandler handler = new ProductExceptionHandler();
+        ResponseEntity<Object> response = handler.handle(ex1);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertTrue(response.getBody() instanceof ErrorResponse);
+        ErrorResponse errorResponse = (ErrorResponse) response.getBody();
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), errorResponse.getMessage());
+
+        response = handler.handle(ex2);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody() instanceof ErrorResponse);
+        errorResponse = (ErrorResponse) response.getBody();
+        assertEquals("mensagem teste", errorResponse.getMessage());
     }
 
     @Test
-    void idNotFound_Should_Return404() {
-        var idNotFound = new IdNotFoundException(null);
-        var httpServletRequestMock = Mockito.mock(HttpServletRequest.class);
+    public void handleDefault() {
+        ProductExceptionHandler handler = new ProductExceptionHandler();
+        ResponseEntity<Object> response = handler.handleDefault();
 
-        when(httpServletRequestMock.getRequestURI()).thenReturn("teste000");
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertTrue(response.getBody() instanceof ErrorResponse);
+        ErrorResponse errorResponse = (ErrorResponse) response.getBody();
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), errorResponse.getMessage());
+    }
 
-        var handlerReturn = exceptionHandler.idNotFound(idNotFound, httpServletRequestMock);
+    @Test
+    public void handleGenericException() {
+        GenericException ex = mock(GenericException.class);
+        when(ex.getMessageDTO()).thenReturn("mensagem teste");
+        when(ex.getStatus()).thenReturn(HttpStatus.BAD_REQUEST);
 
-        assertEquals(HttpStatus.NOT_FOUND, handlerReturn.getStatusCode());
-        assertEquals("teste000", handlerReturn.getBody().getPath());
+        ProductExceptionHandler handler = new ProductExceptionHandler();
+        ResponseEntity<Object> response = handler.handleGenericException(ex);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody() instanceof ErrorResponse);
+        ErrorResponse errorResponse = (ErrorResponse) response.getBody();
+        assertEquals("mensagem teste", errorResponse.getMessage());
     }
 }

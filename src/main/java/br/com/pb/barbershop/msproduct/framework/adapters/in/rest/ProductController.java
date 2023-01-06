@@ -20,7 +20,7 @@ public class ProductController {
     private final ProductUseCase productService;
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(@RequestBody @Valid ProductDTO productDTO) {
+    public ResponseEntity<ProductResponse> create(@RequestBody @Valid ProductDTO productDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(productService.create(productDTO));
     }
 
@@ -35,7 +35,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(
+    public ResponseEntity<ProductResponse> update(
         @PathVariable Long id,
         @RequestBody @Valid ProductDTO productDTO
     ) {

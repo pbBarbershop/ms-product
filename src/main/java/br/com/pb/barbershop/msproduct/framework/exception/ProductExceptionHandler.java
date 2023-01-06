@@ -53,12 +53,12 @@ public class ProductExceptionHandler extends ResponseEntityExceptionHandler {
         return handleDefault();
     }
 
-    private ResponseEntity<Object> handleDefault() {
+    public ResponseEntity<Object> handleDefault() {
         var errorResponse = ErrorResponse.builder().message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()).build();
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity<Object> handleGenericException(GenericException ex) {
+    public ResponseEntity<Object> handleGenericException(GenericException ex) {
         var errorResponse = ErrorResponse.builder().message(ex.getMessageDTO()).build();
         return new ResponseEntity<>(errorResponse, ex.getStatus());
     }

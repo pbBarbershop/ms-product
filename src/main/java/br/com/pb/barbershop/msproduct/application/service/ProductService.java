@@ -65,15 +65,11 @@ public class ProductService implements ProductUseCase {
 
     @Override
     public ProductResponse update(Long id, ProductDTO productDTO) {
-        checkIfIdExists(id);
-        productDTO.setId(id);
-
-        var name = productDTO.getName().trim();
-        productDTO.setName(name);
+        Product product = repository
+                .findById(id)
+                .orElseThrow(() -> new GenericException(HttpStatus.BAD_REQUEST, "Id não encontrado!"));
 
         checkIfNameExists(productDTO);
-
-        var product = repository.getReferenceById(id);
 
         product.setName(productDTO.getName());
         product.setValue(productDTO.getValue());

@@ -91,7 +91,8 @@
                         <exclude>**/config/**</exclude>
                         <exclude>**/domain/**</exclude>
                         <exclude>**/MsProductApplication.*</exclude>
-                        <exclude>**/StandartError.*</exclude>
+                        <exclude>**/ErrorResponse.*</exclude>
+                        <exclude>**/GenericException.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
