@@ -89,7 +89,7 @@ public class ProductService implements ProductUseCase {
     private void checkIfNameExists(ProductDTO productDTO) {
         var check = repository.findByNameIgnoreCase(productDTO.getName());
         if (check.isPresent() && productDTO.getId() != check.get().getId()) {
-            throw new GenericException(HttpStatus.BAD_REQUEST, "Nome do produto já existe");
+            throw new GenericException(HttpStatus.BAD_REQUEST, "Existe um produto com este nome!");
         }
     }
 
