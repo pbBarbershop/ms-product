@@ -1,14 +1,14 @@
 # MS User
 
 
-- URL: http://localhost:8084/api/barbershop/user
+- URL: http://localhost:8084/api/barbershop/product
 - [Swagger - OpenAPI](https://github.com/pbBarbershop/ms-user/blob/master/src/main/resources/openapi.yaml)
 - MySQL Workbench
-- [Dockerfile](https://github.com/pbBarbershop/ms-user/blob/master/Dockerfile)
+- [Dockerfile](https://github.com/pbBarbershop/ms-product/blob/master/Dockerfile)
 
-![Cobertura de Testes](./src/main/resources/static/images/ms-use-cobertura-teste.png)
+![Cobertura de Testes](./src/main/resources/static/images/ms-product-cobertura-teste.png)
 
-![Postman](./src/main/resources/static/images/postman-ms-user.png)
+![Postman](./src/main/resources/static/images/postman-ms-product.png)
 
 ## Exemplo de cURL
 
