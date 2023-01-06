@@ -1,4 +1,4 @@
-# MS User
+# MS Product
 
 
 - URL: http://localhost:8084/api/barbershop/product
