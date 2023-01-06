@@ -77,6 +77,13 @@
             <version>2.10</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -91,7 +98,8 @@
                         <exclude>**/config/**</exclude>
                         <exclude>**/domain/**</exclude>
                         <exclude>**/MsProductApplication.*</exclude>
-                        <exclude>**/StandartError.*</exclude>
+                        <exclude>**/ErrorResponse.*</exclude>
+                        <exclude>**/GenericException.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
